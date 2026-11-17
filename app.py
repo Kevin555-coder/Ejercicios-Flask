@@ -54,6 +54,50 @@ def arreglos(valores=0, columnas=0, filas=0):
 
     return f"<h1>El arreglo aleatorio es: {arreglo}</h1><hr>"
 
-if __name__ == '__main__':
-    # El valor True indica que la app se deja en modo debug
+## Creamos otra ruta para realizar la tabla de multiplicar
+## ) Programa que captura un número y realiza
+## la tabla de multiplicar hasta el 10
+
+@app.route("/tabla")
+@app.route("/tabla/<int:numero>")
+def tabla(numero=0):
+
+    resultado = ""
+
+    for i in range(1, 11):
+        multiplicacion = numero * i
+
+        resultado += f"{numero} x {i} = {multiplicacion}<br>"
+
+    return f"<h1>La tabla de multiplicar es:</h1>{resultado}<hr>"
+
+# ) Programa que calcula las areas de un circulo,
+## cuadrado y triangulo
+
+import math
+
+@app.route("/areas")
+@app.route("/areas/<string:figura>/<float:valor1>")
+@app.route("/areas/<string:figura>/<float:valor1>/<float:valor2>")
+def areas(figura="circulo", valor1=0, valor2=0):
+
+    if figura == "circulo":
+        resultado = math.pi * (valor1 ** 2)
+        R = f"El area del circulo es: {resultado:.2f}"
+
+    elif figura == "cuadrado":
+        resultado = valor1 * valor1
+        R = f"El area del cuadrado es: {resultado:.2f}"
+
+    elif figura == "triangulo":
+        resultado = (valor1 * valor2) / 2
+        R = f"El area del triangulo es: {resultado:.2f}"
+
+    else:
+        R = "Figura geometrica no valida"
+
+    return f"<h1>{R}</h1><hr>"
+
+if __name__ == "__main__":
     app.run(debug=True)
+
